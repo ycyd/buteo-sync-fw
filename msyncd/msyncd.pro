@@ -66,7 +66,8 @@ HEADERS += ServerActivator.h \
     SyncSigHandler.h \
     StorageChangeNotifier.h \
     SyncOnChange.h \
-    SyncOnChangeScheduler.h
+    SyncOnChangeScheduler.h \
+    USBInotifyProxy.h
 
 SOURCES += ServerActivator.cpp \
     TransportTracker.cpp \
@@ -91,7 +92,8 @@ SOURCES += ServerActivator.cpp \
     SyncSigHandler.cpp \
     StorageChangeNotifier.cpp \
     SyncOnChange.cpp \
-    SyncOnChangeScheduler.cpp
+    SyncOnChangeScheduler.cpp \
+    USBInotifyProxy.cpp
 
 QMAKE_CXXFLAGS = -Wall \
     -g \
