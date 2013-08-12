@@ -28,6 +28,16 @@ USBInotifyProxy::removePath (const QString path)
     iPathsToWatch.removeOne (path);
 }
 
+bool
+USBInotifyProxy::usbNodeExists (const QString nodeName)
+{
+    QFile file (nodeName);
+    if (file.exists ())
+        return true;
+    else
+        return false;
+}
+
 void
 USBInotifyProxy::run ()
 {

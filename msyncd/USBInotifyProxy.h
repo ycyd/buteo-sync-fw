@@ -17,6 +17,8 @@ public:
 
     void removePath (const QString path);
 
+    bool usbNodeExists (const QString nodeName="/dev/ttyGS1");
+
 signals:
 
     void fileCreated (const QString filename);
