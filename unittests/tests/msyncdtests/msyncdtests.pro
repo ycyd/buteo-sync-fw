@@ -107,4 +107,6 @@ linux-g++-maemo {
   SOURCES += USBModedProxy.cpp
 } else {
   message("Compiling without USBModed")
+  HEADERS += USBInotifyProxy.h
+  SOURCES += USBInotifyProxy.cpp
 }

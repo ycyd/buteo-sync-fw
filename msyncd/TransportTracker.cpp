@@ -22,19 +22,24 @@
  */
 
 #include "TransportTracker.h"
-#if __USBMODED__
-#include "USBModedProxy.h"
-#endif
 #include "NetworkManager.h"
 #include "LogMacros.h"
 #include <QMutexLocker>
-
+#if __USBMODED__
+#include "USBModedProxy.h"
+#else
+#include "USBInotifyProxy.h"
+#endif
 
 using namespace Buteo;
 
 TransportTracker::TransportTracker(QObject *aParent) :
     QObject(aParent),
+#if __USBMODED__
     iUSBProxy(0),
+#else
+    iUSBInotify(0),
+#endif
     iInternet(0)
 {
     FUNCTION_CALL_TRACE;
@@ -43,7 +48,7 @@ TransportTracker::TransportTracker(QObject *aParent) :
     iTransportStates[Sync::CONNECTIVITY_BT] = false;
     iTransportStates[Sync::CONNECTIVITY_INTERNET] = false;
 
-#if __USBMODED__
+#ifdef __USBMODED__
     // USB
     iUSBProxy = new USBModedProxy(this);
     if (!iUSBProxy->isValid())
@@ -60,8 +65,8 @@ TransportTracker::TransportTracker(QObject *aParent) :
             iUSBProxy->isUSBConnected();
     }
 #else
-    // hack when not compiled with USB moded to enable USB sync there
-    iTransportStates[Sync::CONNECTIVITY_USB] = true;
+    iUSBInotify = new USBInotifyProxy ();
+    iTransportStates[Sync::CONNECTIVITY_USB] = iUSBInotify->usbNodeExists ();
 #endif
     // BT
 #if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)

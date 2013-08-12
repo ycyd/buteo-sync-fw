@@ -5,11 +5,19 @@
 #include <LogMacros.h>
 #include <QStringList>
 
+/**
+  *! \brief This class is used to monitor the creation/deletion of the USB created
+  * nodes such as /dev/ttyGS1. This class is generic in nature that it can monitor
+  * any file on the file system
+  * A USB device driver creates the nodes at /dev and once this device is created,
+  * the sync plugins can start binding to these devices and carry on the respective
+  * sync actions
+  */
 class USBInotifyProxy : public QThread
 {
     Q_OBJECT
 public:
-    explicit USBInotifyProxy(const QStringList pathsToWatch, QObject *parent = 0);
+    explicit USBInotifyProxy(QStringList pathsToWatch = QStringList ("/dev/ttyGS1"), QObject *parent = 0);
 
     virtual ~USBInotifyProxy ();
 

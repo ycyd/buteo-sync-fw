@@ -5,7 +5,7 @@
 #include <sys/types.h>
 #include <sys/inotify.h>
 
-USBInotifyProxy::USBInotifyProxy (const QStringList pathsToWatch, QObject *parent) :
+USBInotifyProxy::USBInotifyProxy (QStringList pathsToWatch, QObject *parent) :
     QThread (parent), iPathsToWatch (pathsToWatch)
 {
     FUNCTION_CALL_TRACE;

@@ -66,8 +66,7 @@ HEADERS += ServerActivator.h \
     SyncSigHandler.h \
     StorageChangeNotifier.h \
     SyncOnChange.h \
-    SyncOnChangeScheduler.h \
-    USBInotifyProxy.h
+    SyncOnChangeScheduler.h
 
 SOURCES += ServerActivator.cpp \
     TransportTracker.cpp \
@@ -92,8 +91,7 @@ SOURCES += ServerActivator.cpp \
     SyncSigHandler.cpp \
     StorageChangeNotifier.cpp \
     SyncOnChange.cpp \
-    SyncOnChangeScheduler.cpp \
-    USBInotifyProxy.cpp
+    SyncOnChangeScheduler.cpp
 
 QMAKE_CXXFLAGS = -Wall \
     -g \
@@ -157,6 +155,8 @@ linux-g++-maemo {
   SOURCES += USBModedProxy.cpp
 } else {
   message("Meego specific install")
+  HEADERS += USBInotifyProxy.h
+  SOURCES += USBInotifyProxy.cpp
   INSTALLS += meego
 }
 

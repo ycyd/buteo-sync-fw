@@ -34,6 +34,12 @@
 #include <QtSystemInfo/QSystemDeviceInfo>
 #endif
 
+#if __USBMODED__
+class USBModedProxy;
+#else
+class USBInotifyProxy;
+#endif
+
 namespace Buteo {
 
 class USBModedProxy;
@@ -101,7 +107,11 @@ private:
 
     QMap<Sync::ConnectivityType, bool> iTransportStates;
 
+#if __USBMODED__
     USBModedProxy *iUSBProxy;
+#else
+    USBInotifyProxy *iUSBInotify;
+#endif
 
 #if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
     QDeviceInfo iDeviceInfo;
