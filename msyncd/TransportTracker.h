@@ -37,7 +37,7 @@
 #if __USBMODED__
 class USBModedProxy;
 #else
-class USBInotifyProxy;
+class USBNotifyProxy;
 #endif
 
 namespace Buteo {
@@ -110,7 +110,7 @@ private:
 #if __USBMODED__
     USBModedProxy *iUSBProxy;
 #else
-    USBInotifyProxy *iUSBInotify;
+    USBNotifyProxy *iUSBNotify;
 #endif
 
 #if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)

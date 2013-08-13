@@ -28,7 +28,7 @@
 #if __USBMODED__
 #include "USBModedProxy.h"
 #else
-#include "USBInotifyProxy.h"
+#include "USBNotifyProxy.h"
 #endif
 
 using namespace Buteo;
@@ -38,7 +38,7 @@ TransportTracker::TransportTracker(QObject *aParent) :
 #if __USBMODED__
     iUSBProxy(0),
 #else
-    iUSBInotify(0),
+    iUSBNotify(0),
 #endif
     iInternet(0)
 {
@@ -65,8 +65,10 @@ TransportTracker::TransportTracker(QObject *aParent) :
             iUSBProxy->isUSBConnected();
     }
 #else
-    iUSBInotify = new USBInotifyProxy ();
-    iTransportStates[Sync::CONNECTIVITY_USB] = iUSBInotify->usbNodeExists ();
+    iUSBNotify = new USBNotifyProxy ();
+    QObject::connect(iUSBNotify, SIGNAL(usbConnection(bool)),
+                     this, SLOT(onUsbStateChanged(bool)));
+    iTransportStates[Sync::CONNECTIVITY_USB] = iUSBNotify->usbNodeExists ();
 #endif
     // BT
 #if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)

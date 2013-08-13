@@ -155,8 +155,8 @@ linux-g++-maemo {
   SOURCES += USBModedProxy.cpp
 } else {
   message("Meego specific install")
-  HEADERS += USBInotifyProxy.h
-  SOURCES += USBInotifyProxy.cpp
+  HEADERS += USBNotifyProxy.h
+  SOURCES += USBNotifyProxy.cpp
   INSTALLS += meego
 }
 
