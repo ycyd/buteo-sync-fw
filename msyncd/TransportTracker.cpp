@@ -37,8 +37,6 @@ TransportTracker::TransportTracker(QObject *aParent) :
     QObject(aParent),
 #if __USBMODED__
     iUSBProxy(0),
-#else
-    iUSBNotify(0),
 #endif
     iInternet(0)
 {
@@ -65,10 +63,9 @@ TransportTracker::TransportTracker(QObject *aParent) :
             iUSBProxy->isUSBConnected();
     }
 #else
-    iUSBNotify = new USBNotifyProxy ();
-    QObject::connect(iUSBNotify, SIGNAL(usbConnection(bool)),
+    QObject::connect(&iUSBNotify, SIGNAL(usbStateChanged(bool)),
                      this, SLOT(onUsbStateChanged(bool)));
-    iTransportStates[Sync::CONNECTIVITY_USB] = iUSBNotify->usbNodeExists ();
+    iTransportStates[Sync::CONNECTIVITY_USB] = iUSBNotify.usbNodeExists ();
 #endif
     // BT
 #if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)

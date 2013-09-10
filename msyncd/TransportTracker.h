@@ -37,6 +37,7 @@
 #if __USBMODED__
 class USBModedProxy;
 #else
+#include "USBNotifyProxy.h"
 class USBNotifyProxy;
 #endif
 
@@ -110,7 +111,7 @@ private:
 #if __USBMODED__
     USBModedProxy *iUSBProxy;
 #else
-    USBNotifyProxy *iUSBNotify;
+    USBNotifyProxy iUSBNotify;
 #endif
 
 #if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
