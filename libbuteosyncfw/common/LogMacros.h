@@ -48,20 +48,30 @@
 #define LOG_TRACE(msg) LOG_MSG_L(QtDebugMsg, msg)
 #define LOG_TRACE_PLAIN(msg) LOG_MSG_L_PLAIN(QtDebugMsg, msg)
 */
+
+#ifdef WANT_TRACE
+    #define LOG_PROTOCOL(msg) qDebug() << msg
+    #define LOG_INFO(msg) qDebug() << msg
+    #define LOG_DEBUG(msg) qDebug() << __FILE__ << __LINE__ << ":" << msg
+    #define LOG_TRACE(msg) qDebug() << msg
+    #define LOG_TRACE_PLAIN(msg) qDebug() << msg
+    /*!
+     * Creates a trace message to log when the function is entered and exited.
+     * Logs also to time spent in the function.
+     */
+    #define FUNCTION_CALL_TRACE Buteo::LogTimer timerDebugVariable(QString(__PRETTY_FUNCTION__));
+#else
+    #define LOG_DEBUG(msg)
+    #define LOG_TRACE(msg)
+    #define LOG_TRACE_PLAIN(msg)
+    #define LOG_INFO(msg)
+    #define LOG_PROTOCOL(msg)
+    #define FUNCTION_CALL_TRACE
+#endif
+
 #define LOG_FATAL(msg) qFatal(msg)
 #define LOG_CRITICAL(msg) qCritical() << msg
 #define LOG_WARNING(msg) qWarning() << msg
-#define LOG_PROTOCOL(msg) qDebug() << msg
-#define LOG_INFO(msg) qDebug() << msg
-#define LOG_DEBUG(msg) qDebug() << msg
-#define LOG_TRACE(msg) qDebug() << msg
-#define LOG_TRACE_PLAIN(msg) qDebug() << msg
-
-/*!
- * Creates a trace message to log when the function is entered and exited.
- * Logs also to time spent in the function.
- */
-#define FUNCTION_CALL_TRACE Buteo::LogTimer timerDebugVariable(QString(__PRETTY_FUNCTION__));
 
 namespace Buteo {
 
