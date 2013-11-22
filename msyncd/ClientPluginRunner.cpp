@@ -20,6 +20,7 @@
  * 02110-1301 USA
  *
  */
+#include <QTimer>
 
 #include "ClientPluginRunner.h"
 #include "ClientThread.h"
@@ -29,8 +30,9 @@
 
 using namespace Buteo;
 
-// Maximum time in milliseconds to wait for a thread to stop
-static const unsigned long long MAX_THREAD_STOP_WAIT_TIME = 5000;
+// Maximum time in milliseconds for a plugin to finish sync
+//static const unsigned long long MAX_PLUGIN_SYNC_TIME = 1800000; // 30mins
+static const unsigned long long MAX_PLUGIN_SYNC_TIME = 120000; // 30mins
 
 ClientPluginRunner::ClientPluginRunner(const QString &aPluginName,
     SyncProfile *aProfile, PluginManager *aPluginMgr,
@@ -132,6 +134,9 @@ bool ClientPluginRunner::start()
     bool rv = false;
     if (iInitialized && iThread != 0)
     {
+        // Set a timer after which the sync session should stop
+        QTimer::singleShot( MAX_PLUGIN_SYNC_TIME, this, SLOT(pluginTimeout()) );
+
         rv = iThread->startThread(iPlugin);
     }
 
@@ -242,3 +247,17 @@ void ClientPluginRunner::onThreadExit()
     emit done();
 }
 
+void ClientPluginRunner::pluginTimeout()
+{
+    FUNCTION_CALL_TRACE;
+
+    if ( iThread->isRunning() ) {
+        // Thread is still running after a max wait. Terminate it
+        LOG_WARNING( "Client plugin thread " << iThread->getProfileName() <<
+                     " stuck since " << MAX_PLUGIN_SYNC_TIME << "msec. Terminating..." );
+        iThread->stopThread(); // Can't help. Have to terminate the thread
+        iThread->wait(1); // Wait for some more time for the thread to exit
+    }
+
+    emit error(iProfile->name(), "Plugin timeout occured", Sync::SYNC_PLUGIN_TIMEOUT);
+}

@@ -147,6 +147,8 @@ CONFIG(debug,debug|release) {
         $(OBJECTS_DIR)/*.gcov
 }
 
+DEFINES += BUTEO_ENABLE_DEBUG
+
 # for compiling on meego
 linux-g++-maemo {
   message("Maemo specific install")

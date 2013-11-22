@@ -97,6 +97,10 @@ private slots:
     // Slot for observing thread exit
     void onThreadExit();
 
+    // Slot to handle the timeout of a plugin. If a client plugin exceeds a max
+    // timeout, then the plugin is stopped with error and unloaded
+    void pluginTimeout();
+
 private:
 
     SyncProfile *iProfile;

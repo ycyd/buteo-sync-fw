@@ -1,5 +1,5 @@
 TEMPLATE = lib
-TARGET = hdummy-client
+TARGET = dummy-client
 DEPENDPATH += .
 INCLUDEPATH += . \
     ../../.. \
@@ -19,7 +19,7 @@ SOURCES += DummyClient.cpp
 QMAKE_CLEAN += $(TARGET) $(TARGET0) $(TARGET1) $(TARGET2)
 QMAKE_CLEAN += $(OBJECTS_DIR)/*.gcda $(OBJECTS_DIR)/*.gcno $(OBJECTS_DIR)/*.gcov $(OBJECTS_DIR)/moc_*
 
-target.path = /opt/tests/buteo-syncfw
+target.path = /opt/tests/buteo-syncfw5
 INSTALLS += target
 
 

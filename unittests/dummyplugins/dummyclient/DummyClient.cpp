@@ -22,6 +22,9 @@
  */
 #include "DummyClient.h"
 
+#include <QThread>
+#include <QDebug>
+
 using namespace Buteo;
 
 extern "C" DummyClient* createPlugin( const QString& aPluginName,
@@ -62,6 +65,8 @@ bool DummyClient::uninit()
 
 bool DummyClient::startSync()
 {
+    QThread::sleep(320);
+    qDebug() << "Finished sleeping";
     return true;
 }
 
