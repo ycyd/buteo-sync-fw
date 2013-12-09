@@ -10,3 +10,6 @@ OTHER_FILES += \
     server-plugin.cfg \
     storage-plugin.cfg
 
+SUBDIRS += \
+    devicesync
+
