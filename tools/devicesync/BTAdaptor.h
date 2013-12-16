@@ -25,6 +25,7 @@
 
 #include <QObject>
 #include <QPair>
+#include <QDBusInterface>
 
 class BTAdaptor : public QObject
 {
@@ -32,19 +33,35 @@ class BTAdaptor : public QObject
 public:
     explicit BTAdaptor(QObject *parent = 0);
     
-signals:
-    
-public slots:
-    
-private:
-    QPair<QString, QString> mTargetBtDevice;
-    
-    bool validateBtState();
+    bool validateBtDevice();
     
     void searchBtDevices();
+ 
+signals:
     
-    bool areDevicesPaired(QPair<QString,QString> targetDevice);
+protected slots:
+    void deviceFound (QString address, QMap<QString,QVariant> devices);
+
+    void deviceDisappeared (QString address);
+
+private:
+    QPair<QString, QString>       mTargetBtDevice;
     
+    QString                       mAdapterPath;
+    
+    typedef struct {
+        QString name;
+        bool paired;
+        QString btClass;
+    }BtDeviceProps;
+
+    QMap<QString, BtDeviceProps*>  mFoundDevices;
+
+    QString adapterPath();
+ 
+    bool areDevicesPaired(QString targetDevice);
+ 
+    bool deviceHasSyncmlService(const QString& btAddress);
 };
 
 #endif // BTADAPTOR_H

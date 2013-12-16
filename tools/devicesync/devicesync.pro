@@ -4,13 +4,19 @@
 #
 #-------------------------------------------------
 
-QT       += core
+QT       += core dbus
 
 QT       -= gui
 
-TARGET = devicesync
+TARGET = devicesync-tool
+
 CONFIG   += console
 CONFIG   -= app_bundle
+
+CONFIG += \
+    link_pkgconfig
+
+PKGCONFIG += buteosyncfw5
 
 TEMPLATE = app
 

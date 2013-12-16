@@ -21,10 +21,17 @@
  *
  */
 #include <QCoreApplication>
+#include <QDebug>
+#include "BTAdaptor.h"
 
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
     
+    BTAdaptor btAdapter;
+    qDebug() << "Validating device";
+    btAdapter.validateBtDevice ();
+    qDebug() << "Searching for devices nearby";
+    btAdapter.searchBtDevices ();
     return a.exec();
 }
