@@ -11,5 +11,5 @@ OTHER_FILES += \
     storage-plugin.cfg
 
 SUBDIRS += \
-    devicesync
+    buteo-sync-tool
 

@@ -130,6 +130,19 @@ BTAdaptor::searchBtDevices ()
 }
 
 void
+BTAdaptor::pairDevices (const QString targetAddress)
+{
+    //! @todo Implement pairing of the device later. For now, ask the user to
+    // pair thru the device bluetooth UI
+}
+
+BTAdaptor::BtDeviceProps*
+BTAdaptor::device (const QString address)
+{
+    return mFoundDevices.value (address);
+}
+
+void
 BTAdaptor::deviceFound (QString address, QMap<QString, QVariant> devices)
 {
     BtDeviceProps *prop = new BtDeviceProps();
@@ -177,4 +190,5 @@ bool
 BTAdaptor::deviceHasSyncmlService (const QString &btAddress)
 {
     //! @todo Check using SDP browse
+    return false;
 }

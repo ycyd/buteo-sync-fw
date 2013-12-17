@@ -8,7 +8,7 @@ QT       += core dbus
 
 QT       -= gui
 
-TARGET = devicesync-tool
+TARGET = buteo-sync-tool
 
 CONFIG   += console
 CONFIG   -= app_bundle
@@ -28,3 +28,10 @@ SOURCES += main.cpp \
 HEADERS += \
     BTAdaptor.h \
     DeviceSync.h
+
+target.path = /usr/bin
+
+template.path = /etc/buteo/profiles/sync/
+template.files = bt_device_sync_template.xml
+
+INSTALLS += target template

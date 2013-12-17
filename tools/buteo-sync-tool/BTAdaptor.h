@@ -31,29 +31,52 @@ class BTAdaptor : public QObject
 {
     Q_OBJECT
 public:
-    explicit BTAdaptor(QObject *parent = 0);
     
-    bool validateBtDevice();
-    
-    void searchBtDevices();
- 
-signals:
-    
-protected slots:
-    void deviceFound (QString address, QMap<QString,QVariant> devices);
-
-    void deviceDisappeared (QString address);
-
-private:
-    QPair<QString, QString>       mTargetBtDevice;
-    
-    QString                       mAdapterPath;
-    
+    /**
+      *! \brief The structure that holds the properties of a bluetooth device
+      */
     typedef struct {
         QString name;
         bool paired;
         QString btClass;
     }BtDeviceProps;
+
+    explicit BTAdaptor(QObject *parent = 0);
+
+    /**
+     *! \brief Method to validate the bt device on the host
+     * @return true if everything is okay, false otherwise
+     */
+    bool validateBtDevice();
+ 
+    /**
+     *! \brief Method to search for bluetooth devices in range
+     * 
+     */
+    void searchBtDevices();
+ 
+    /**
+      *! \brief Method to pair the host bluetooth with the target
+      * @param the address of the target bluetooth device
+      */
+    void pairDevices(const QString targetAddress);
+
+    /**
+      *! \brief Returns the bluetooth parameters given an address
+      * @return The struct @see BtDeviceProps with the properties of bt device
+      * @param the address of the target bt device
+      */
+    BtDeviceProps* device(const QString address);
+
+protected slots:
+
+    void deviceFound (QString address, QMap<QString,QVariant> devices);
+
+    void deviceDisappeared (QString address);
+
+private:
+
+    QString                       mAdapterPath;
 
     QMap<QString, BtDeviceProps*>  mFoundDevices;
 
