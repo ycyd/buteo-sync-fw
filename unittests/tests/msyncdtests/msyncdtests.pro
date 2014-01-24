@@ -13,7 +13,7 @@ equals(QT_MAJOR_VERSION, 4): {
     MOBILITY += systeminfo
 }
 
-PKGCONFIG += dbus-1 libiphb
+PKGCONFIG += dbus-1 libiphb keepalive
 
 equals(QT_MAJOR_VERSION, 5): PKGCONFIG += Qt5SystemInfo
 
@@ -49,13 +49,13 @@ SOURCES += ServerThread.cpp \
     ServerPluginRunnerTest.cpp \
     SynchronizerTest.cpp \
     SyncAlarmInventory.cpp \
-    IPHeartBeat.cpp \
-    IPHeartBeatTest.cpp \
+    NetworkManager.cpp \
     SyncSigHandler.cpp \
     SyncSigHandlerTest.cpp \
     SyncOnChange.cpp \
     SyncOnChangeScheduler.cpp \
-    StorageChangeNotifier.cpp
+    StorageChangeNotifier.cpp \
+    BackgroundSync.cpp
 
 HEADERS += ServerThread.h \
     ServerThreadTest.h \
@@ -87,13 +87,13 @@ HEADERS += ServerThread.h \
     ServerPluginRunnerTest.h \
     SyncAlarmInventory.h \
     SynchronizerTest.h \
-    IPHeartBeat.h \
-    IPHeartBeatTest.h \
+    NetworkManager.h \
     SyncSigHandler.h \
     SyncSigHandlerTest.h \
     SyncOnChange.h \
     SyncOnChangeScheduler.h \
-    StorageChangeNotifier.h
+    StorageChangeNotifier.h \
+    BackgroundSync.h
 
 OTHER_FILES +=
 
