@@ -355,6 +355,19 @@ public:
      */
     void retriesDone(const QString& aProfileName);
 
+    /*! \brief This is a helper method to create a profile given an account id
+     * and a service name (the name of the base profile plugin) and 
+     * Account service name
+     *
+     * @param accountId the account id for which a profile needs to be generated
+     * @param pluginName the client plugin name (and the corresponding template)
+     * to use to generate the profile
+     * @param the account service name (input for generating the profile)
+     */
+    void createProfileForAccount(const quint32 accountId,
+                                 const QString& pluginName,
+                                 const QString& accServiceName,
+                                 const bool enabled);
 #ifdef SYNCFW_UNIT_TESTS
     friend class ProfileManagerTest;
 #endif

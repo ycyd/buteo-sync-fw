@@ -1257,3 +1257,25 @@ void ProfileManager::retriesDone(const QString& aProfileName)
        LOG_DEBUG("syncretries : retry success for" << aProfileName);
     }
 }
+
+void ProfileManager::createProfileForAccount(const quint32 accountId,
+                                             const QString &pluginName,
+                                             const QString &accServiceName,
+                                             const bool enabled)
+{
+    FUNCTION_CALL_TRACE;
+
+    //Fetch a sync profile template based on the pluginName
+    SyncProfile *baseProfile = syncProfile(pluginName);
+    if(baseProfile != 0 && (baseProfile->boolKey(KEY_USE_ACCOUNTS, false) == true)) {
+        // Create a new profile from the base profile (that is already found)
+        SyncProfile *newProfile = baseProfile->clone();
+        newProfile->setName(accServiceName);
+        newProfile->setKey(KEY_DISPLAY_NAME, accServiceName + "-sync");
+        newProfile->setKey(KEY_ACCOUNT_ID, QString::number(accountId));
+        newProfile->setEnabled(enabled);
+
+        // Create the new profile
+        updateProfile(*newProfile);
+    }
+}

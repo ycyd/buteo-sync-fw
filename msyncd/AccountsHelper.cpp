@@ -35,8 +35,10 @@ AccountsHelper::AccountsHelper(ProfileManager &aProfileManager, QObject *aParent
 {
     iAccountManager = new Accounts::Manager(this);
     // Connect to signal for account creation, deletion, and modification
-    QObject::connect(iAccountManager, SIGNAL(accountCreated(Accounts::AccountId)),
-                     this, SLOT(slotAccountCreated(Accounts::AccountId)));
+    // The slotAccountCreated will be removed so that the clients interested
+    // in creating a profile can use @see ProfileManager::createProfileForAccount()
+    //QObject::connect(iAccountManager, SIGNAL(accountCreated(Accounts::AccountId)),
+    //                 this, SLOT(slotAccountCreated(Accounts::AccountId)));
     QObject::connect(iAccountManager, SIGNAL(accountRemoved(Accounts::AccountId)),
                      this, SLOT(slotAccountRemoved(Accounts::AccountId)));
     QObject::connect(iAccountManager, SIGNAL(accountUpdated(Accounts::AccountId)),
