@@ -41,6 +41,8 @@ public:
 
     bool startSync(const QString profileName);
 
+    void profileTest();
+
 signals:
     
 public slots:

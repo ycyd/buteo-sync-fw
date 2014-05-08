@@ -25,7 +25,7 @@
 #include <QDebug>
 #include <QDBusReply>
 
-const QString BT_TEMPLATE_PROFILE = "bt_device_sync_template";
+const QString BT_DEVICE_SYNC_TEMPLATE = "bt_device_sync_template";
 
 DeviceSync::DeviceSync(QObject *parent) :
     QObject(parent)
@@ -43,15 +43,23 @@ DeviceSync::createProfile (const QString btAddress, const QString btName)
     }
 
     Buteo::ProfileManager pm;
-    bool createProfile = true;
-    Buteo::SyncProfile *sp = pm.createTempSyncProfile (btAddress, createProfile);
-    if (!sp)
+    Buteo::SyncProfile *sp = pm.syncProfile (BT_DEVICE_SYNC_TEMPLATE);
+    if (sp)
     {
-        qWarning() << "Failure in creating a bt profile";
-        return "";
+        sp->setKey (KEY_DISPLAY_NAME, btName);
+        QStringList keys;
+        keys << btAddress << sp->name ();
+        sp->setName (keys);
+        sp->setEnabled (true);
+        sp->setBoolKey (KEY_HIDDEN, false);
+        sp->setKey (KEY_BT_ADDRESS, btAddress);
+        sp->setKey (KEY_BT_NAME, btName);
+        mProfileName = pm.updateProfile (*sp);
+    } else
+    {
+        qWarning() << "Template profile " << BT_DEVICE_SYNC_TEMPLATE << " does not exist";
     }
-    mProfileName = pm.updateProfile (*sp);
-
+    
     return mProfileName;
 }
 
@@ -80,4 +88,14 @@ DeviceSync::startSync (const QString profileName)
         return false;
     }
     return true;
+}
+
+void
+DeviceSync::profileTest ()
+{
+    ProfileManager pm;
+    Buteo::SyncProfile* sp = pm.syncProfile ("76317012");
+    QList<Profile*> subProfiles = sp->allSubProfiles ();
+    qDebug() << "Sub profiles count:" << subProfiles.count ();
+    qDebug() << sp->allNonStorageKeys();
 }
